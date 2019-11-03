@@ -1,0 +1,22 @@
+USE dvo9asn2;
+
+SELECT * FROM Doctor;
+DELETE FROM Doctor WHERE LicenseDate<'1965-01-1';
+-- The delete command did not delete the rows because all the doctors that meet this criteria are heads of hospitals which are foreign keys
+SELECT * FROM Doctor;
+SELECT * FROM Assigned;
+
+CREATE VIEW HeadAndPatients AS SELECT CONCAT_WS(' ', Patient.Fname, Patient.Lname) AS 'Patient', Doctor.Lname AS 'Doctor Last Name', Hospital.Name AS 'Hospital Name' FROM Patient INNER JOIN (Assigned INNER JOIN (Doctor INNER JOIN Hospital ON HeadOf=License) USING (License)) USING (OHIP) WHERE Hospital.headDate>'1995-12-31';
+SELECT * FROM HeadAndPatients;
+
+SELECT * FROM Doctor;
+SELECT * FROM Assigned;
+DELETE FROM Doctor WHERE Lname='Clooney';
+-- the delete command did delete the rows because Clooney is not a hospital head
+SELECT * FROM Doctor;
+SELECT * FROM Assigned;
+
+DELETE FROM Doctor WHERE Specialty='Surgeon';
+ --  the delete command did not delete the rows because Aziz is a head
+SELECT * FROM Doctor;
+SELECT * FROM Assigned;

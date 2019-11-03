@@ -1,0 +1,144 @@
+--------------
+Show databases
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| dvo9asn2           |
+| mysql              |
+| performance_schema |
+| vetoffice          |
++--------------------+
+5 rows in set (0.00 sec)
+
+--------------
+DROP DATABASE IF EXISTS dvo9asn2
+--------------
+
+Query OK, 4 rows affected (0.31 sec)
+
+--------------
+CREATE DATABASE dvo9asn2
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON yourwesternuseridassign2db.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+SHOW TABLES
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+CREATE TABLE Hospital(
+	Code varchar(3) NOT NULL,
+	Name varchar(20),
+	City varchar(20),
+	Province varchar(2),
+    Beds smallint,
+    PRIMARY KEY(Code)
+)
+--------------
+
+Query OK, 0 rows affected (0.21 sec)
+
+--------------
+CREATE TABLE Doctor(
+	License varchar(4) NOT NULL,
+	Specialty varchar(30),
+	LicenseDate date,
+	Fname varchar(20),
+	Lname varchar(20), 
+	PRIMARY KEY(License), 
+	WorksFor varchar(3), 
+	FOREIGN KEY(WorksFor) REFERENCES Hospital(Code)
+)
+--------------
+
+Query OK, 0 rows affected (0.07 sec)
+
+--------------
+CREATE TABLE Patient(
+	OHIP varchar(9) NOT NULL, 
+	Fname varchar(20), 
+	Lname varchar(20), 
+	PRIMARY KEY(OHIP)
+)
+--------------
+
+Query OK, 0 rows affected (0.05 sec)
+
+--------------
+CREATE TABLE Assigned(
+	OHIP varchar(9), 
+	License varchar(4), 
+	FOREIGN KEY(OHIP) REFERENCES Patient(OHIP), 
+	FOREIGN KEY(License) REFERENCES Doctor(License) ON DELETE CASCADE, 
+	PRIMARY KEY(OHIP,License)
+)
+--------------
+
+Query OK, 0 rows affected (0.07 sec)
+
+--------------
+ALTER TABLE Hospital ADD HeadOf varchar(4), 
+ADD CONSTRAINT FOREIGN KEY(HeadOf) REFERENCES Doctor(License)
+--------------
+
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+ALTER TABLE Hospital ADD headDate date
+--------------
+
+Query OK, 0 rows affected (0.23 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW TABLES
+--------------
+
++--------------------+
+| Tables_in_dvo9asn2 |
++--------------------+
+| Assigned           |
+| Doctor             |
+| Hospital           |
+| Patient            |
++--------------------+
+4 rows in set (0.00 sec)
+
+Bye

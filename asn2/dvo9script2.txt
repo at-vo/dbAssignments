@@ -1,0 +1,57 @@
+USE dvo9asn2;
+
+SELECT * FROM Patient;
+LOAD DATA LOCAL INFILE "loaddatafall2019.txt" INTO TABLE Patient FIELDS TERMINATED BY',';
+
+SELECT * FROM Patient;
+INSERT INTO Patient VALUES('113222331','Dat','Vo');
+SELECT * FROM Patient;
+
+SELECT * FROM Doctor;
+INSERT INTO Doctor VALUES('RD34','Urologist','1980-09-09','Bernie','Kavorikian',NULL);
+INSERT INTO Doctor VALUES('GD56','Podiatrist','1960-06-24','Joey','Shabado',NULL);
+INSERT INTO Doctor VALUES('HT45','Surgeon','1987-06-20','Ross','Clooney',NULL);
+INSERT INTO Doctor VALUES('YT67','Pediatrician','1955-02-20','Ben','Spock',NULL);
+INSERT INTO Doctor VALUES('JK78','Surgeon','1990-08-08','Mandy','Webster',NULL);
+INSERT INTO Doctor VALUES('SE66','Surgeon','1989-08-24','Colleen','Aziz',NULL);
+INSERT INTO Doctor VALUES('IMDB','Surgeon','2004-11-16','Gregory','House',NULL);
+SELECT * FROM Doctor;
+
+SELECT * FROM Hospital;
+INSERT INTO Hospital VALUES('BBC','St.Joseph','London','ON',1000,'GD56','1999-08-10');
+INSERT INTO Hospital VALUES('ABC','Victoria','London','ON',1600,'SE66','1994-12-05');
+INSERT INTO Hospital VALUES('DDE','Victoria','Victoria','BC',1200,'YT67','1997-12-07');
+SELECT * FROM Hospital;
+
+SELECT * FROM Assigned;
+INSERT INTO Assigned VALUES('110112113','GD56');
+INSERT INTO Assigned VALUES('444555666','HT45');
+INSERT INTO Assigned VALUES('444555666','JK78');
+INSERT INTO Assigned VALUES('111222333','SE66');
+INSERT INTO Assigned VALUES('111222333','YT67');
+INSERT INTO Assigned VALUES('111222333','JK78');
+INSERT INTO Assigned VALUES('333444555','GD56');
+INSERT INTO Assigned VALUES('667766777','YT67');
+INSERT INTO Assigned VALUES('667766777','JK78');
+INSERT INTO Assigned VALUES('667766777','GD56');
+INSERT INTO Assigned VALUES('111222111','YT67');
+INSERT INTO Assigned VALUES('113222331','IMDB');
+SELECT * FROM Assigned;
+
+SELECT * FROM Doctor;
+UPDATE Doctor SET WorksFor='BBC' WHERE License='RD34';
+UPDATE Doctor SET WorksFor='BBC' WHERE License='GD56';
+UPDATE Doctor SET WorksFor='DDE' WHERE License='HT45';
+UPDATE Doctor SET WorksFor='DDE' WHERE License='YT67';
+UPDATE Doctor SET WorksFor='BBC' WHERE License='JK78';	
+UPDATE Doctor SET WorksFor='ABC' WHERE License='SE66';
+UPDATE Doctor SET WorksFor='ABC' WHERE License='IMDB';
+SELECT * FROM Doctor;
+
+SELECT * FROM Patient;
+UPDATE Patient SET Lname='Brown' WHERE OHIP='111222111';
+SELECT * FROM Patient;
+
+SELECT * FROM Assigned;
+UPDATE Assigned SET License=(SELECT License FROM Doctor WHERE Lname='Clooney') WHERE License=(SELECT License FROM Doctor WHERE Lname='Spock');
+SELECT * FROM Assigned;

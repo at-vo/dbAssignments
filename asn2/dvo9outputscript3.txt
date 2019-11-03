@@ -1,0 +1,157 @@
+--------------
+SELECT Lname FROM Patient
+--------------
+
++--------+
+| Lname  |
++--------+
+| NULL   |
+| Gellar |
+| Brown  |
+| Green  |
+| Vo     |
+| Gellar |
+| Gellar |
+| Bing   |
++--------+
+8 rows in set (0.00 sec)
+
+--------------
+SELECT DISTINCT Lname FROM Patient
+--------------
+
++--------+
+| Lname  |
++--------+
+| NULL   |
+| Gellar |
+| Brown  |
+| Green  |
+| Vo     |
+| Bing   |
++--------+
+6 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM Doctor ORDER BY Lname
+--------------
+
++---------+--------------+-------------+---------+------------+----------+
+| License | Specialty    | LicenseDate | Fname   | Lname      | WorksFor |
++---------+--------------+-------------+---------+------------+----------+
+| SE66    | Surgeon      | 1989-08-24  | Colleen | Aziz       | ABC      |
+| HT45    | Surgeon      | 1987-06-20  | Ross    | Clooney    | DDE      |
+| IMDB    | Surgeon      | 2004-11-16  | Gregory | House      | ABC      |
+| RD34    | Urologist    | 1980-09-09  | Bernie  | Kavorikian | BBC      |
+| GD56    | Podiatrist   | 1960-06-24  | Joey    | Shabado    | BBC      |
+| YT67    | Pediatrician | 1955-02-20  | Ben     | Spock      | DDE      |
+| JK78    | Surgeon      | 1990-08-08  | Mandy   | Webster    | BBC      |
++---------+--------------+-------------+---------+------------+----------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT Name, Code FROM Hospital WHERE Beds>1500
+--------------
+
++----------+------+
+| Name     | Code |
++----------+------+
+| Victoria | ABC  |
++----------+------+
+1 row in set (0.00 sec)
+
+--------------
+SELECT Lname, Fname FROM Doctor WHERE WorksFor=(SELECT Code FROM Hospital WHERE Name='St.Joseph')
+--------------
+
++------------+--------+
+| Lname      | Fname  |
++------------+--------+
+| Shabado    | Joey   |
+| Webster    | Mandy  |
+| Kavorikian | Bernie |
++------------+--------+
+3 rows in set (0.00 sec)
+
+--------------
+SELECT Fname, Lname FROM Patient WHERE Lname LIKE 'G%'
+--------------
+
++---------+--------+
+| Fname   | Lname  |
++---------+--------+
+| Bill    | Gellar |
+| Jon     | Green  |
+| Colleen | Gellar |
+| Sean    | Gellar |
++---------+--------+
+4 rows in set (0.00 sec)
+
+ERROR 1052 (23000) at line 15: Column 'Fname' in field list is ambiguous
+ERROR 1054 (42S22) at line 17: Unknown column 'Head' in 'on clause'
+--------------
+SELECT Fname, Lname FROM Patient INNER JOIN (Assigned INNER JOIN Doctor USING (License)) USING (OHIP) WHERE Doctor.Lname='Clooney'
+--------------
+
+--------------
+SELECT Name, City, Lname FROM Hospital INNER JOIN Doctor ON Head=LicenseNumber
+--------------
+
+--------------
+SELECT SUM(Beds) AS 'Total Number of Beds' FROM Hospital
+--------------
+
++----------------------+
+| Total Number of Beds |
++----------------------+
+|                 3800 |
++----------------------+
+1 row in set (0.00 sec)
+
+--------------
+SELECT Patient.Fname, Doctor.Fname FROM Patient INNER JOIN (Assigned INNER JOIN (Hospital INNER JOIN Doctor ON HeadOf=License) USING (License)) Using (OHIP)
+--------------
+
++---------+---------+
+| Fname   | Fname   |
++---------+---------+
+| Bill    | Joey    |
+| Colleen | Joey    |
+| Scotty  | Joey    |
+| Jon     | Colleen |
++---------+---------+
+4 rows in set (0.00 sec)
+
+ERROR 1054 (42S22) at line 23: Unknown column 'HospitalCode' in 'on clause'
+--------------
+SELECT Lname, Fname FROM Doctor INNER JOIN Hospital ON WorksFor=HospitalCode WHERE Specialty='Surgeon' AND Name='Victoria'
+--------------
+
+--------------
+SELECT Fname FROM Doctor WHERE License NOT IN (SELECT License FROM Assigned)
+--------------
+
++--------+
+| Fname  |
++--------+
+| Bernie |
+| Ben    |
++--------+
+2 rows in set (0.00 sec)
+
+--------------
+SELECT Lname, Fname, COUNT(OHIP) FROM Assigned INNER JOIN Doctor USING(License) GROUP BY License
+--------------
+
++---------+---------+-------------+
+| Lname   | Fname   | COUNT(OHIP) |
++---------+---------+-------------+
+| Shabado | Joey    |           3 |
+| Clooney | Ross    |           4 |
+| House   | Gregory |           1 |
+| Webster | Mandy   |           3 |
+| Aziz    | Colleen |           1 |
++---------+---------+-------------+
+5 rows in set (0.00 sec)
+
+Bye

@@ -1,0 +1,27 @@
+USE dvo9asn2;
+
+SELECT Lname FROM Patient;-- q1
+
+SELECT DISTINCT Lname FROM Patient;-- q2
+
+SELECT * FROM Doctor ORDER BY Lname;-- q3
+
+SELECT Name, Code FROM Hospital WHERE Beds>1500;-- q4
+
+SELECT Lname, Fname FROM Doctor WHERE WorksFor=(SELECT Code FROM Hospital WHERE Name='St.Joseph');-- q5
+
+SELECT Fname, Lname FROM Patient WHERE Lname LIKE 'G%';-- q6
+
+Select Lname, Fname from Patient where OHIP IN (Select OHIP from Assigned where License =(select License from Doctor where Lname = 'Clooney'));-- q7
+
+SELECT Name, City, Lname FROM Hospital INNER JOIN Doctor ON Head=LicenseNumber;-- q8
+
+SELECT SUM(Beds) AS 'Total Number of Beds' FROM Hospital;-- q9
+
+SELECT Patient.Fname, Doctor.Fname FROM Patient INNER JOIN (Assigned INNER JOIN (Hospital INNER JOIN Doctor ON HeadOf=License) USING (License)) Using (OHIP);-- q10
+
+SELECT Lname, Fname FROM Doctor INNER JOIN Hospital ON WorksFor=Code WHERE Specialty='Surgeon' AND Name='Victoria';-- q11
+
+SELECT Fname FROM Doctor WHERE License NOT IN (SELECT License FROM Assigned);-- q12
+
+SELECT Lname, Fname, COUNT(OHIP) FROM Assigned INNER JOIN Doctor USING(License) GROUP BY License;-- q13
