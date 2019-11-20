@@ -1,0 +1,55 @@
+Show databases;
+
+DROP DATABASE IF EXISTS dvo9asn3;
+CREATE DATABASE dvo9asn3;
+use dvo9asn3;
+
+-- make sure the t.a. has access to database
+GRANT USAGE ON *.* TO 'ta'@'localhost';
+DROP USER 'ta'@'localhost';
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319';
+GRANT ALL PRIVILEGES ON yourwesternuseridassign2db.* TO 'ta'@'localhost';
+FLUSH PRIVILEGES;
+
+-- create hospital
+SHOW TABLES;
+CREATE TABLE Hospital(
+	Code varchar(3) NOT NULL,
+	Name varchar(20),
+	City varchar(20),
+	Province varchar(2),
+    Beds smallint,
+    PRIMARY KEY(Code)
+);
+-- create doctor
+CREATE TABLE Doctor(
+	License varchar(4) NOT NULL,
+	Specialty varchar(30),
+	LicenseDate date,
+	Fname varchar(20),
+	Lname varchar(20), 
+	PRIMARY KEY(License), 
+	WorksFor varchar(3), 
+	FOREIGN KEY(WorksFor) REFERENCES Hospital(Code)
+);
+-- create patient
+CREATE TABLE Patient(
+	OHIP varchar(9) NOT NULL, 
+	Fname varchar(20), 
+	Lname varchar(20), 
+	PRIMARY KEY(OHIP)
+);
+-- create assigned
+CREATE TABLE Assigned(
+	OHIP varchar(9), 
+	License varchar(4), 
+	FOREIGN KEY(OHIP) REFERENCES Patient(OHIP), 
+	FOREIGN KEY(License) REFERENCES Doctor(License) ON DELETE CASCADE, 
+	PRIMARY KEY(OHIP,License)
+);
+
+-- add constraint to HeadOf
+ALTER TABLE Hospital ADD HeadOf varchar(4), 
+ADD CONSTRAINT FOREIGN KEY(HeadOf) REFERENCES Doctor(License);
+ALTER TABLE Hospital ADD headDate date;
+SHOW TABLES;
