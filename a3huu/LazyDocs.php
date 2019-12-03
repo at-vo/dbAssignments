@@ -1,4 +1,6 @@
 <?php
+/**Dat Vo 250983323 */
+
     include "index.php";
     include "connectdb.php";
     $query = "SELECT Doctor.Fname, Doctor.Lname FROM Doctor INNER JOIN Assigned on Doctor.License=Assgined.License WHERE Assigned.OHIP=NULL";
@@ -13,4 +15,6 @@
         echo '<br>';
     }
     mysqli_free_result($result);
+    mysqli_close($connection);
+
 ?>

@@ -1,21 +1,23 @@
 <?php
-    include 'index.php';
+/**Dat Vo 250983323 */
+
     include 'connectdb.php';
     include 'getDoctors.php';
-    include 'getDoctors2.php';
     $get = $_POST["get"];
-    $query = "SELECT * FROM Doctor WHERE License=$arr[$get]";
-    $result2=mysqli_query($con,$query);
-    if (!$result2) {
+    // gets license
+    $query = "SELECT * FROM Doctor WHERE License='$get'";
+    $result=mysqli_query($con,$query);
+    if (!$result) {
         die("couldn't get doctor");
     }
     else{
         $row=mysqli_fetch_assoc($result);
         foreach($row as $item){
-            echo $item . " ";
+            echo "<h4> ". $item . " </h4>"; //prints
         }        
     }
 
+    mysqli_close($connection);
 
 
 

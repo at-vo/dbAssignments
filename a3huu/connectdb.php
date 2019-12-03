@@ -1,7 +1,8 @@
 
 <?php
+/**Dat Vo 250983323 */
 $dbhost = "localhost";
-$dbuser= "";
+$dbuser= "root";
 $dbpass = "cs3319";
 $dbname = "dvo9asn3"; 
 $con = new mysqli($dbhost, $dbuser,$dbpass,$dbname);

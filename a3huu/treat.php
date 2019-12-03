@@ -6,8 +6,8 @@
     $doc = $_POST["doc"];
 
 
-if ($treat == "treat"){
-    $query = "INSERT INTO Assigned values(\'$pat\',\'$doc\')";
+if ($treat == "treat"){ //query for treat
+    $query = "INSERT INTO Assigned values('$pat','$doc')";
     $result=mysqli_query($con,$query);
     if (!$result) {
         die("treatment failed. patient might have died.");
@@ -15,15 +15,16 @@ if ($treat == "treat"){
     else{
         echo "treatment successful <br>";
     }
-}else{
-    $query = "DELETE FROM Assigned WHERE License=$doc && OHIP=$pat";
+}else{  //query for stop treating
+    $query = "DELETE FROM Assigned WHERE OHIP='$pat'";
     $result=mysqli_query($con,$query);
     if (!$result) {
         die("stopping treatment failed. the patient's probably still alright.");
     }
     else{
-        echo "stopping treatment successful. onto the next one <br>";
+        echo "<h4> stopping treatment successful. onto the next one <br> </h4> ";
     }
 }
+mysqli_close($connection);
 
 ?>

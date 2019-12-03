@@ -1,0 +1,81 @@
+/* Dat Vo 250983323 */
+/* just a bit of formating */
+/* general */
+body{
+    background-color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+    font-weight: 200;
+}
+
+h1{
+    color: blue;
+    margin: auto;
+    border-block-color: black;
+    padding: 2px;
+    text-transform: uppercase;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    position: relative;
+    left: 500px;
+}
+*{
+    position: relative;
+    padding: 5px;
+}
+
+h2{
+    color: brown;
+    padding: 0in;
+}
+
+form{
+    color: red;
+    text-underline-position: above;
+}
+input{
+    color: blue;
+}
+/* doctors */
+.getDocBox{
+    background-color: teal;
+    color: white;
+    margin: 5px 10%;
+    border: 2px black;
+    border-radius: 20px;
+}
+.getDocBox h2{
+    color: black;
+    text-decoration: underline;
+    text-transform: capitalize;}
+.container{
+    width: 100%;
+    margin: auto;
+}
+
+/* hospitals */
+.HosBox{
+    background-color: greenyellow;
+    color: white;
+    margin: 5px 10%;
+    border: 2px black;
+    border-radius: 20px;
+}
+
+.PatBox{
+    background-color: yellow;
+    color: black;
+    margin: 5px 10%;
+    border: 2px black;
+    border-radius: 20px;
+}
+
+/* prints */
+
+h4{
+    color: coral;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    height: 0px;
+    position: static;
+    top: 20px;
+}
