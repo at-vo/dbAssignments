@@ -9,6 +9,7 @@
   $spec = $_POST["spec"];
   $date = $_POST["date"];
 
+  
   $query = "INSERT INTO Doctor VALUES('$license','$spec','$date','$Fname','$Lname','$hos');";
   $result=mysqli_query($con,$query);
   if (!$result) {
